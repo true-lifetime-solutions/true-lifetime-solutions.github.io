@@ -7,17 +7,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
 
     <style>
       :root {
-        --blue-dark: #1f567d;
+        --blue-dark: #163b56;
         --blue-mid: #2e86b7;
-        --blue-light: #5fb0d6;
-        --text-dark: #1e1e1e;
-        --bg: #f4f6f8;
+        --blue-light: #6ec1e4;
+        --text-dark: #1a1a1a;
+        --bg: #f2f5f8;
+        --paper: #fafafa;
       }
 
       * {
@@ -30,97 +31,112 @@
 
       body {
         margin: 0;
-        font-family: "Montserrat", sans-serif;
-        background: var(--bg);
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(180deg, #eef3f7, #ffffff);
         color: var(--text-dark);
-        overflow-x: hidden;
       }
 
-      /* Fake navbar */
+      /* NAVBAR — corporate seriousness */
       .navbar {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        height: 56px;
-        font-size: 25px;
-        padding: 0 32px;
+        height: 72px;
         z-index: 1000;
-        background: var(--blue-dark);
+        backdrop-filter: blur(10px);
+        background: rgba(22, 59, 86, 0.88);
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: bold;
-        letter-spacing: 0.5px;
+        font-weight: 600;
+        letter-spacing: 0.4px;
       }
 
-      /* Pages */
+      /* PAGES */
       .page {
-        width: 100%;
-        height: 100vh;
-        position: relative;
+        min-height: 100svh;
+        padding-top: 72px;
         display: flex;
         justify-content: center;
         align-items: center;
-      }
-
-      /* Letter card */
-      .letter {
-        background: white;
-        width: min(900px, 90%);
-        padding: 64px;
         position: relative;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
       }
 
-      /* Decorative waves */
-      .wave-top,
-      .wave-bottom {
+      /* LETTER — paper texture */
+      .letter {
+        background: linear-gradient(transparent, transparent),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+          var(--paper);
+        background-blend-mode: multiply;
+        width: 90%;
+        max-width: 880px;
+        padding: 56px 32px;
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        position: relative;
+        animation: fadeUp 0.8s ease;
+      }
+
+      .letter::after {
+        content: "CONFIDENTIAL • INTERNAL USE ONLY";
         position: absolute;
-        left: 0;
-        width: 100%;
-        height: 120px;
+        bottom: 16px;
+        right: 20px;
+        letter-spacing: 1px;
+        opacity: 0.25;
       }
 
       .letter-content {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         text-align: center;
       }
 
       h1 {
+        font-size: 45px;
+        font-weight: 600;
         color: var(--blue-dark);
-        font-style: italic;
         margin-bottom: 24px;
-        font-size: 1.4rem;
       }
 
       p {
+        font-size: 32px;
         line-height: 1.6;
-        font-size: 1rem;
+        margin: 16px 0;
       }
 
-      /* Scroll arrow */
+      small {
+        font-size: 25px;
+        opacity: 0.7;
+      }
+
+      .lavin {
+        width: 100%;
+        max-width: 280px;
+        margin-top: 24px;
+      }
+
+      .lavins {
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 24px;
+      }
+
+      /* SCROLL ARROW */
       .scroll-arrow {
         position: absolute;
-        bottom: 24px;
+        bottom: 32px;
         left: 50%;
         transform: translateX(-50%);
-        width: 40px;
-        height: 40px;
-        border: 2px solid var(--blue-dark);
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
+        background: white;
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor: pointer;
-        animation: bounce 1.5s infinite;
-        background: white;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        animation: bounce 1.6s infinite;
       }
 
       .scroll-arrow::before {
@@ -133,54 +149,61 @@
         margin-top: -4px;
       }
 
+      /* PAGE 2 — reveal */
+      .page-2 {
+        background: linear-gradient(180deg, #ffffff, #eef3f7);
+        flex-direction: column;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .page-2.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ANIMATIONS */
       @keyframes bounce {
         0%,
-        20%,
-        50%,
-        80%,
         100% {
-          transform: translateX(-50%) translateY(0);
+          transform: translate(-50%, 0);
         }
-        40% {
-          transform: translateX(-50%) translateY(8px);
-        }
-        60% {
-          transform: translateX(-50%) translateY(4px);
+        50% {
+          transform: translate(-50%, 10px);
         }
       }
 
-      /* Second page */
-      .page-2 {
-        background: white;
-        flex-direction: column;
-      }
-
-      .lavin {
-        max-width: 150px;
-        width: 100%;
-        margin-top: 16px;
-        margin-bottom: 16px;
-      }
-
-      .lavins {
-        max-width: 350px;
-        width: 100%;
-        margin-top: 16px;
-        margin-bottom: 16px;
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
+
   <body>
-    <div class="navbar">True Lifetime Solutions ™</div>
+    <div class="navbar">
+      <p>True Lifetime Solutions ™</p>
+    </div>
 
-    <section class="page page-1">
+    <section class="page">
       <div class="letter">
-        <div class="wave-top"></div>
-        <div class="wave-bottom"></div>
-
         <div class="letter-content">
-          <h1>Aun que seas un oficialmente un abuelorro...</h1>
+          <h1>
+            Según nuestros cálculos actuariales,<br />ya eres un abuelorro.
+          </h1>
           <img class="lavin" src="2.png" alt="" />
+          <p>
+            En True Lifetime Solutions valoramos cada etapa vital con rigor,
+            cariño y un Excel muy serio.
+          </p>
         </div>
       </div>
 
@@ -189,8 +212,23 @@
 
     <section class="page page-2" id="page2">
       <img class="lavins" src="1.png" alt="" />
-      <p>Te queremos igual <3</p>
-      <small>Los reales</small>
+      <p>Te queremos igual. Incluso ahora.</p>
+      <small>Los reales.</small>
     </section>
+
+    <script>
+      const page2 = document.querySelector(".page-2");
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            page2.classList.add("visible");
+          }
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(page2);
+    </script>
   </body>
 </html>
